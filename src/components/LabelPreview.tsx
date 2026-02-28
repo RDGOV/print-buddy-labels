@@ -16,8 +16,10 @@ export function LabelPreview({ article, settings, scale = 2.5 }: LabelPreviewPro
   useEffect(() => {
     if (barcodeRef.current && settings.showBarcode && article.codigoBarra) {
       try {
-        JsBarcode(barcodeRef.current, article.codigoBarra, {
-          format: 'EAN13',
+        const code = article.codigoBarra.trim();
+        const isEAN13 = /^\d{13}$/.test(code);
+        JsBarcode(barcodeRef.current, code, {
+          format: isEAN13 ? 'EAN13' : 'CODE128',
           width: 1.2,
           height: 28,
           displayValue: true,

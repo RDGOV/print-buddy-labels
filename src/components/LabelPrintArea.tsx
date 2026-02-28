@@ -15,8 +15,10 @@ function PrintLabel({ article, settings }: PrintLabelProps) {
   useEffect(() => {
     if (barcodeRef.current && settings.showBarcode && article.codigoBarra) {
       try {
-        JsBarcode(barcodeRef.current, article.codigoBarra, {
-          format: 'EAN13',
+        const code = article.codigoBarra.trim();
+        const isEAN13 = /^\d{13}$/.test(code);
+        JsBarcode(barcodeRef.current, code, {
+          format: isEAN13 ? 'EAN13' : 'CODE128',
           width: 1,
           height: 22,
           displayValue: true,
