@@ -18,6 +18,15 @@ const defaultSettings: LabelSettings = {
   showPrecio: true,
   showBarcode: true,
   fontSize: 8,
+  storeNameFontSize: 7,
+  articleFontSize: 8,
+  talleFontSize: 8,
+  precioFontSize: 10,
+  storeNameBold: true,
+  articleBold: false,
+  talleBold: true,
+  precioBold: true,
+  tallePrecioLayout: 'row',
 };
 
 const Index = () => {
