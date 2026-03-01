@@ -33,28 +33,26 @@ function PrintLabel({ article, settings }: PrintLabelProps) {
     }
   }, [article.codigoBarra, settings.showBarcode]);
 
-  const fs = settings.fontSize;
-
   return (
     <div className="label-single" style={{ fontFamily: 'Arial, sans-serif', color: '#000', background: '#fff' }}>
       <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
           {settings.showStoreName && settings.storeName && (
-            <p style={{ fontSize: `${fs - 1}pt`, fontWeight: 'bold', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
+            <p style={{ fontSize: `${settings.storeNameFontSize ?? 7}pt`, fontWeight: settings.storeNameBold ? 'bold' : 'normal', textAlign: 'center', textTransform: 'uppercase', letterSpacing: '0.5px', margin: 0 }}>
               {settings.storeName}
             </p>
           )}
           {settings.showArticulo && (
-            <p style={{ fontSize: `${fs}pt`, fontWeight: 500, margin: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
+            <p style={{ fontSize: `${settings.articleFontSize ?? 8}pt`, fontWeight: settings.articleBold ? 'bold' : 500, margin: 0, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
               {article.articulo}
             </p>
           )}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ display: 'flex', flexDirection: settings.tallePrecioLayout === 'column' ? 'column' : 'row', justifyContent: settings.tallePrecioLayout === 'column' ? 'flex-start' : 'space-between', alignItems: settings.tallePrecioLayout === 'column' ? 'flex-start' : 'center', gap: settings.tallePrecioLayout === 'column' ? '2px' : '0' }}>
             {settings.showTalle && article.talle && (
-              <span style={{ fontSize: `${fs}pt`, fontWeight: 500 }}>T: {article.talle}</span>
+              <span style={{ fontSize: `${settings.talleFontSize ?? 8}pt`, fontWeight: settings.talleBold ? 'bold' : 500 }}>T: {article.talle}</span>
             )}
             {settings.showPrecio && (
-              <span style={{ fontSize: `${fs + 2}pt`, fontWeight: 'bold' }}>
+              <span style={{ fontSize: `${settings.precioFontSize ?? 10}pt`, fontWeight: settings.precioBold ? 'bold' : 500 }}>
                 {formatPriceAR(article.precioVenta)}
               </span>
             )}

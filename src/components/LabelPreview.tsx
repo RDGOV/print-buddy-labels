@@ -47,8 +47,6 @@ export function LabelPreview({ article, settings, scale = 2.5 }: LabelPreviewPro
     }
   }, [article.codigoBarra, settings.showBarcode]);
 
-  const fs = settings.fontSize;
-
   return (
     <div
       className="bg-white text-black border border-border rounded overflow-hidden flex-shrink-0"
@@ -62,25 +60,25 @@ export function LabelPreview({ article, settings, scale = 2.5 }: LabelPreviewPro
     >
       <div className="flex flex-col justify-between h-full">
         {/* Top: data */}
-        <div className="space-y-0">
+        <div className="space-y-0 flex flex-col justify-center flex-1">
           {settings.showStoreName && settings.storeName && (
-            <p className="font-bold text-center uppercase tracking-wider" style={{ fontSize: `${fs - 1}px` }}>
+            <p className={`text-center uppercase tracking-wider ${settings.storeNameBold ? 'font-bold' : ''}`} style={{ fontSize: `${settings.storeNameFontSize ?? 7}px` }}>
               {settings.storeName}
             </p>
           )}
           {settings.showArticulo && (
-            <p className="truncate font-medium" style={{ fontSize: `${fs}px` }}>
+            <p className={`truncate ${settings.articleBold ? 'font-bold' : 'font-medium'}`} style={{ fontSize: `${settings.articleFontSize ?? 8}px` }}>
               {article.articulo}
             </p>
           )}
-          <div className="flex justify-between items-center">
+          <div className={`flex ${settings.tallePrecioLayout === 'column' ? 'flex-col items-start gap-1' : 'justify-between items-center'}`}>
             {settings.showTalle && article.talle && (
-              <span className="font-medium" style={{ fontSize: `${fs}px` }}>
+              <span className={settings.talleBold ? 'font-bold' : 'font-medium'} style={{ fontSize: `${settings.talleFontSize ?? 8}px` }}>
                 T: {article.talle}
               </span>
             )}
             {settings.showPrecio && (
-              <span className="font-bold" style={{ fontSize: `${fs + 2}px` }}>
+              <span className={settings.precioBold ? 'font-bold' : 'font-medium'} style={{ fontSize: `${settings.precioFontSize ?? 10}px` }}>
                 {formatPriceAR(article.precioVenta)}
               </span>
             )}
@@ -89,8 +87,8 @@ export function LabelPreview({ article, settings, scale = 2.5 }: LabelPreviewPro
 
         {/* Bottom: barcode */}
         {settings.showBarcode && (
-          <div className="flex justify-center">
-            <svg ref={barcodeRef} />
+          <div className="flex justify-center flex-1 items-end min-h-0">
+            <svg ref={barcodeRef} style={{ maxWidth: '100%', height: 'auto', objectFit: 'contain' }} />
           </div>
         )}
       </div>
